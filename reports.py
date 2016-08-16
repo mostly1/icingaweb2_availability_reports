@@ -7,6 +7,8 @@ import datetime
 import json
 import pdfkit
 
+web_host = "192.170.228.108"
+
 parser = argparse.ArgumentParser(description='Availability reports for icingaweb2')
 parser.add_argument('-g', '--hostgroup', type=str, help="Name of hostgroup")
 parser.add_argument('-s', '--start', type=str, help="Start time for query yyyy-mm-dd hr:min:sec")
@@ -28,9 +30,13 @@ host =  creds['credentials']['host']
 
 count = 0
 
-
-
-
+style = """
+<style>
+table, th, td {
+   border: 1px solid black;
+}
+</style>
+"""
 try:
 
 
@@ -53,12 +59,17 @@ try:
     total = 0
 
     report_name = report_time+"-"+group+".html"
+    pdf_name = report_time+"-"+group+".pdf"
+
     with open('/var/www/html/reports/'+report_name,"a+") as file: 
         file.write("<!DOCTYPE html>\n")
         file.write("<html>\n")
+        file.write("<head>\n")
+        file.write(style+"\n")
+        file.write("</head>\n")
         file.write("<body>\n")
-        file.write("<h1>Report Date Range: "+str(start)+" - "+str(end)+"</h1>\n")
-        file.write("<table>\n")
+        file.write("<h1 align=center >Report Date Range: "+str(start)+" - "+str(end)+"</h1>\n")
+        file.write("<table align=center >\n")
         file.write("<tr style align=left> <th>Host Name</th> <th>Availability</th></tr>\n")
 
     for host in hosts:
@@ -92,4 +103,7 @@ finally:
     if connect:
         connect.close()
 
-pdfkit.from_file('/var/www/html/reports/'+report_name, '/var/www/html/reports/out.pdf')
+pdfkit.from_file('/var/www/html/reports/'+report_name, '/var/www/html/reports/'+pdf_name)
+print "copy the following links: \n" 
+print "HTML VIEW = "+web_host+"/reports/"+report_name
+print "DOWNLOADABLE PDF= "+web_host+"/reports/"+pdf_name
