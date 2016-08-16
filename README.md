@@ -7,12 +7,12 @@ Requires pdfkit: https://pypi.python.org/pypi/pdfkit
 
 Use the below to install wkhtmltopdf:
 
-'''
-sudo apt-get install xfonts-75dpi
-wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2/wkhtmltox-0.12.2_linux-trusty-amd64.deb
-sudo dpkg -i wkhtmltox-0.12.2_linux-trusty-amd64.deb
-wkhtmltopdf http://www.google.com test.pdf
-'''
+
+> sudo apt-get install xfonts-75dpi
+> wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2/wkhtmltox-0.12.2_linux-trusty-amd64.deb
+> sudo dpkg -i wkhtmltox-0.12.2_linux-trusty-amd64.deb
+> wkhtmltopdf http://www.google.com test.pdf
+
 
 Uses the icinga_reports_1.10.0 SQL function found here: https://github.com/Icinga/icinga-reports/releases
 
