@@ -5,6 +5,7 @@ import sys
 import argparse
 import datetime
 import json
+import pdfkit
 
 parser = argparse.ArgumentParser(description='Availability reports for icingaweb2')
 parser.add_argument('-g', '--hostgroup', type=str, help="Name of hostgroup")
@@ -51,8 +52,8 @@ try:
     hosts = [hosts[0] for hosts in mysql.fetchall()]
     total = 0
 
-    report_name = report_time+"-"+group+".txt"
-    with open(report_name,"a+") as file: 
+    report_name = report_time+"-"+group+".html"
+    with open('/var/www/html/reports/'+report_name,"a+") as file: 
         file.write("<!DOCTYPE html>\n")
         file.write("<html>\n")
         file.write("<body>\n")
@@ -69,12 +70,12 @@ try:
         mysql.execute(get_display_names)
         host_name = mysql.fetchone()
         for result in results:
-            with open(report_name, "a+") as file:
+            with open('/var/www/html/reports/'+report_name, "a+") as file:
                 file.write("<tr><td>{}</td> <td>{}</td></tr>\n" .format(host_name[0],result))
             total += result
             count += 1
     total_avail = total / count
-    with open(report_name, "a+") as file:
+    with open('/var/www/html/reports/'+report_name, "a+") as file:
         file.write("<tr><td>Total Hostgroup Availability = {}</td></tr>\n" .format(total_avail))
         file.write("</table>\n")
         file.write("</body>\n")
@@ -90,3 +91,5 @@ finally:
 
     if connect:
         connect.close()
+
+pdfkit.from_file('/var/www/html/reports/'+report_name, '/var/www/html/reports/out.pdf')
