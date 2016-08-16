@@ -10,3 +10,4 @@ This must be installed and working before this script will function.
 version 0.1 
 - accepts flags for hostgroup name, start and end time for availability reports. 
 - Will calculate downtime for group and individual hosts then print to very basic html file. 
+- pdfkit used to convert .html to .pdf
