@@ -7,7 +7,7 @@ import datetime
 import json
 import pdfkit
 
-web_host = "192.170.228.108"
+web_host = ""
 
 parser = argparse.ArgumentParser(description='Availability reports for icingaweb2')
 parser.add_argument('-g', '--hostgroup', type=str, help="Name of hostgroup")
